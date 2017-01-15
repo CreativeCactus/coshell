@@ -48,6 +48,18 @@ Output:
     test1
     test2
 
+Each line may also be prefixed with a custom string, and have substitutions applied to it.
+
+Example:
+
+    echo -e "a\nb\nc" | coshell -p "echo ?{3#10} : " -e "?"
+
+Output:
+
+    010 : a
+    011 : b
+    012 : c
+
 ## deinterlace option
 
 Order is not deterministic by default, but with option ``--deinterlace`` or ``-d`` all output will be buffered and afterwards
@@ -63,6 +75,27 @@ all processes to immediately exit (including coshell) with the exit code of such
 The `--master=n` or `-m=n` option takes a positive integer number as the index of specified command lines to identify
 which process "leads" the pack: when the process exits all neighbour processes will be terminated as well and its exit code
 will be adopted as coshell exit code.
+
+## prefix option
+
+With `-prefix "some_cmd"` or `-p "some_cmd"`, each line of input will be prepended with some_cmd. This can be used to 
+check the commands before they run, for instance, with -p "echo ".
+
+## escape option
+
+The `-escape` or `-e` option allows substitution of certain patterns in the prefix string for each line. If the option
+is given with a value like `-e "#"` then the substitution escape character will be set to "#". "?" by default. 
+Any string may be used.
+
+### escape patterns
+
+Assuming the default escape string "?" and `-e` is provided, using `-p "some_prefix "` will yield the following, given:
+
+    `" ?{} "`        ?{} will be substituted with the line that is given. If no ?{} is given, it is appended to the prefix.
+    `" ?{#} "`       ?{#} will be substituted with the number of the line, starting with 0.
+    `" ?{2#} "`      ?{2#} will be substituted with the number of the line, padded but not limited, to 2 characters. eg. 08
+    `" ?{#1} "`      ?{#1} will be substituted with the number of the line, starting with 1.
+    `" ?{5#5} "`     ?{5#5} will be substituted with the number of the line, starting with 5, padded to 5 or more characters.
 
 ## Examples
 
