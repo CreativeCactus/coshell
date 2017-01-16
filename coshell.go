@@ -50,7 +50,7 @@ func coshell() int {
 				nextMightBeMasterId = false
 				if len(os.Args[i]) == 0 {
 					fmt.Fprintf(os.Stderr, "Empty master command index specified\n")
-//					os.Exit(1)
+					//					os.Exit(1)
 					return 1
 				}
 
@@ -65,7 +65,7 @@ func coshell() int {
 				i, err := strconv.Atoi(os.Args[i])
 				if err != nil || i < 0 {
 					fmt.Fprintf(os.Stderr, "Invalid master command index specified: %s\n", os.Args[i])
-//					os.Exit(1)
+					//					os.Exit(1)
 					return 1
 				}
 				masterId = i
@@ -93,7 +93,7 @@ func coshell() int {
 				i, err := strconv.Atoi(remainder)
 				if err != nil || i < 0 {
 					fmt.Fprintf(os.Stderr, "Invalid master command index specified: %s\n", remainder)
-//					os.Exit(1)
+					//					os.Exit(1)
 					return 1
 				}
 				masterId = i
@@ -131,7 +131,7 @@ func coshell() int {
 				fmt.Printf("\t\t\t!{#}\t\t\t\tSubstitute the input line number, starting with 0.\n")
 				fmt.Printf("\t\t\t!{p#n}\t\t\t\tSubstitute the input line number, where p and n are both optional integers. P indicates the padded length of the substituded line number. N indicates starting value.\n")
 				fmt.Printf("\nBy default, each line read from standard input will be run as a command via `sh -c`\n")
-//				os.Exit(0)
+				//				os.Exit(0)
 				return 0
 			case "--halt-all", "-a":
 				halt = true
@@ -148,7 +148,7 @@ func coshell() int {
 			default:
 				fmt.Fprintf(os.Stderr, "Invalid parameter specified: %s\n", os.Args[i])
 			}
-//			os.Exit(1)
+			//			os.Exit(1)
 			return 1
 		}
 	}
@@ -164,7 +164,7 @@ func coshell() int {
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		line, err := reader.ReadString('\n')
-		line = strings.TrimSuffix(line,"\n")
+		line = strings.TrimSuffix(line, "\n")
 
 		if err != nil {
 			if err == io.EOF {
@@ -181,7 +181,7 @@ func coshell() int {
 			lineNumber := len(commandLines)
 			line = parseLine(escape, prefix, line, lineNumber)
 		} else { // if there is no parsing but still have a prefix
-			line = prefix+line
+			line = prefix + line
 		}
 
 		commandLines = append(commandLines, line)
@@ -216,7 +216,7 @@ func coshell() int {
 		return -1
 	}
 
-//	os.Exit(exitCode)
+	//	os.Exit(exitCode)
 	return exitCode
 }
 
